@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thank You | Simple Website Flow</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      a[href^="tel"] {
+        color: #fff;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+      textarea {
+        width: 100%;
+        height: 200px;
+        font-size: 1rem;
+        padding: 1rem;
+        border-radius: 5px;
+        border: none;
+        resize: vertical;
+      }
+    </style>
   </head>
   <body>
     <main
@@ -17,29 +33,51 @@
     >
       <h1>Thank You 🎉</h1>
       <p>
-        We’ve received your info and someone from out team will reach out
+        We’ve received your info and someone from our team will reach out
         shortly via text and email!
       </p>
 
-      <p>
-        If you'd like to talk right now, feel free to call or text me directly
-        at <strong><a href="tel:+12133703946">213-370-3946</a></strong
-        >. If I’m not available at the moment, I’ll get back to you as soon as I
-        can.
-      </p>
+      <p><strong>Or share your thoughts below to start momentum 👇</strong></p>
 
-      <p>
-        To create momentum righta away, please text us what your website is for,
-        and how you'd like it to be, and what ideas you have!!!
-      </p>
-
-      <a href="index.html">
-        <button style="margin-top: 2rem">⬅ Back to Home</button>
-      </a>
+      <form
+        action="https://formspree.io/f/mpwdavzr"
+        method="POST"
+        id="vision-form"
+      >
+        <label>
+          Tell us about your site, what you'd love it to do, and any dreams or
+          must-haves you'd like to include:<br />
+          <textarea name="fullVision" required></textarea>
+        </label>
+        <br /><br />
+        <button type="submit">Send to the Team 🚀</button>
+      </form>
     </main>
 
     <footer>
       <p>&copy; 2025 Simple Website Flow – Let’s build something that works.</p>
     </footer>
+
+    <script>
+      const form = document.getElementById("vision-form");
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (res.ok) {
+          form.innerHTML =
+            "<p style='margin-top:2rem;'>Thanks for sharing! We’ll read your vision soon. 🌱</p>";
+        } else {
+          form.innerHTML =
+            "<p style='margin-top:2rem;'>Something went wrong. Try again?</p>";
+        }
+      });
+    </script>
   </body>
 </html>
